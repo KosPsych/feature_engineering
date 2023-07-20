@@ -1,19 +1,16 @@
 import pandas as pd
 import json
-from itertools import chain
 import featuretools as ft
-import json
+from utils.dframe2json import *
+from utils.json2dframe import *
 
 
 
 def feature_engineering (data):
 
-    # convert JSON file to a dataframe using list comprehension
-    all_loans  = [[{key: loan[key] for key in loan} for loan in data['data'][customer]['loans']] for customer in range(len(data['data']))]
-    # list explode
-    all_loans = list(chain(*all_loans))
-    # dataframe conversion
-    df = pd.DataFrame(all_loans)
+    # COnvert Json input to dataframe
+
+    df = json2dframe(data)
 
     # Converting data to the right format
     df['loan_date'] = pd.to_datetime(df['loan_date'], format='%d/%m/%Y')
@@ -58,18 +55,8 @@ def feature_engineering (data):
     df['pol_fee'] = df['fee']^2
 
 
-    # Convert back into json
 
-    # Step 1: Group the DataFrame and aggregate 'loans' into a list of dictionaries
-    grouped_df = df.groupby('customer_ID').apply(lambda x: x[list(df.columns)].to_dict('records')).reset_index(name='loans')
+    #convert back into json
+    json_data = dframe2json(df)
 
-    # Step 2: Convert the grouped DataFrame to a dictionary with 'customer_ID' as the key
-    customers_dict = grouped_df.rename(columns={'customer_ID': 'customer_ID', 'loans': 'loans'}).to_dict('records')
-
-    # Step 3: Create the final dictionary with the 'data' key
-    final_json = {'data': customers_dict}
-
-    # Convert the final dictionary to JSON format
-    json_data = json.dumps(final_json)
-    
     return json_data
