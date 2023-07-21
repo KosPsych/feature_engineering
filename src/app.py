@@ -22,12 +22,6 @@ with open(log_file_path, 'r') as log_file:
 
 app = FastAPI()
 
-# curl -X POST http://127.0.0.1:8000/feature_engineering -H "Content-Type: application/json" -d @cvas_data.json -o f_e_result.json
-
-# curl -X POST http://127.0.0.1:8000/dimensionality_reduction?target=amount -H "Content-Type: application/json" -d @f_e_result.json -o reduced.json
-
-# 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
-
 # Feature engineering
 @app.post("/feature_engineering")
 async def create_features(request: Request):
