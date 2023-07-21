@@ -1,5 +1,5 @@
 import pandas as pd
-import json
+
 
 def dframe2json (df):
 
@@ -10,8 +10,7 @@ def dframe2json (df):
     customers_dict = grouped_df.rename(columns={'customer_ID': 'customer_ID', 'loans': 'loans'}).to_dict('records')
 
     # Step 3: Create the final dictionary with the 'data' key
-    final_json = {'data': customers_dict}
+    json_data = {'data': customers_dict}
 
     # Convert the final dictionary to JSON format
-    json_data = json.dumps(final_json)
     return json_data
