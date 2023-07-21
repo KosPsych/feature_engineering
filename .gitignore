@@ -1,0 +1,7 @@
+__pychache__/
+src/__pychache__/
+src/endpoints/__pychache__/
+src/utils/__pychache__/
+*.log
+*.json
+.env
