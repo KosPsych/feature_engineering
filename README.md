@@ -45,4 +45,4 @@ Produce an HTTP request, for example:
 
  ### healthcheck endpoint
 
- curl -X GET http://127.0.0.1:8000/healthcheck 
+ ``curl -X GET http://127.0.0.1:8000/healthcheck``
